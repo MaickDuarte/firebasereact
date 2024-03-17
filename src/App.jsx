@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, doc, deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 const firebaseApp = initializeApp({
@@ -15,6 +15,15 @@ export const App = () => {
 
   const db = getFirestore(firebaseApp)
   const userCollectionRef = collection(db, "user")
+
+//adicionando dados
+  async function criarUser(){
+    const user = await addDoc(userCollectionRef, {
+      name, 
+      email,
+    })
+    console.log(user)
+  }
 //capturando dados da tabela user
   useEffect(() => {
     const getUsers = async () => {
@@ -23,15 +32,36 @@ export const App = () => {
     }
     getUsers()
   }, [])
+//deletando dados
+
+async function deleteUser(id){
+  const userDoc = doc(db, 'user', id)
+  await deleteDoc(userDoc)
+}
+
 //mostrando dados da tabela user em tela
   return (
     <div>
+      <input
+        type="text" 
+        placeholder="Nome" 
+        value={name} 
+        onChange={e => setName(e.target.value)}>
+      </input>
+      <input 
+        type="text" 
+        placeholder="Email" 
+        value={email} 
+        onChange={e => setEmail(e.target.value)}>
+      </input>
+      <button onClick={criarUser}>Criar Usuário</button>
       <ul>
         {users.map(user => {
           return (
             <div key={user.id}>
               <li>{user.name}</li>
               <li>{user.email}</li>
+              <button onClick={() => deleteUser(user.id)}>deletar usuario</button>
             </div>
           )
         })}
