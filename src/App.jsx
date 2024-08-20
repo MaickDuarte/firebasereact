@@ -64,17 +64,12 @@ async function deleteUser(id){
           <tbody>
           {users.map(user => {
             return (
-              
                 <tr key={user.id}>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user?.documento ?? "Sem documento"}</td>
-                  <td>
-                  <button className="btn btn-danger" onClick={() => deleteUser(user.id)}>deletar usuario</button>
-                  </td>
-                  
+                  <td><button className="btn btn-danger" onClick={() => deleteUser(user.id)}>deletar usuario</button></td>
                 </tr>
-              
             )
           })}
           </tbody>
