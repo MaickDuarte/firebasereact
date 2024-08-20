@@ -37,10 +37,14 @@ export const App = () => {
   }, [])
 //deletando dados
 
-async function deleteUser(id){
-  const userDoc = doc(db, 'user', id)
-  await deleteDoc(userDoc)
-}
+  async function deleteUser(id){
+    const userDoc = doc(db, 'user', id)
+    await deleteDoc(userDoc)
+  }
+
+  function editUser(){
+
+  }
 
 //mostrando dados da tabela user em tela
   return (
@@ -68,7 +72,8 @@ async function deleteUser(id){
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user?.documento ?? "Sem documento"}</td>
-                  <td><button className="btn btn-danger" onClick={() => deleteUser(user.id)}>deletar usuario</button></td>
+                  <td><button className="btn btn-secondary" onClick={() => editUser(user.id)}>Editar</button></td>
+                  <td><button className="btn btn-danger" onClick={() => deleteUser(user.id)}>Deletar usuario</button></td>
                 </tr>
             )
           })}
